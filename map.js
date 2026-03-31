@@ -15,3 +15,50 @@ map.on('moveend', function() {
 
 // Creates the search function
 L.Control.geocoder().addTo(map);
+
+// -------------------------------------------
+const mockPlantData = [
+{
+    id: "p1",
+    name: "Monstera",
+    image: "monstera.jpg",
+    lat: 59.3293,
+    lng: 18.0686,
+    owner: "Alice",
+    water: "Standard"
+},
+{
+    id: "p2",
+    name: "Spider Plant",
+    image: "spider.jpg",
+    lat: 59.3320,
+    lng: 18.0650,
+    owner: "Bob",
+    water: "Thirsty"
+}
+];
+
+// This is your "Engine"
+mockPlantData.forEach(plant => {
+
+// A. Create the Map Pin
+// We use the lat/lng from the specific plant object
+const marker = L.marker([plant.lat, plant.lng]).addTo(map);
+marker.bindPopup(`<b>${plant.name}</b><br>Owned by ${plant.owner}`);
+
+// B. Create the Plant Card (HTML)
+// We use "Template Literals" (the backticks ``) to inject the data
+const cardContainer = document.getElementById('plant-grid');
+
+const cardHTML = `
+<div class="plant-card" data-id="${plant.id}">
+    <img src="${plant.image}" alt="${plant.name}">
+    <h3>${plant.name}</h3>
+    <p>Water Need: ${plant.water}</p>
+    <button>Contact ${plant.owner}</button>
+</div>
+`;
+
+// This adds the card to your grid on the screen
+cardContainer.innerHTML += cardHTML;
+});
