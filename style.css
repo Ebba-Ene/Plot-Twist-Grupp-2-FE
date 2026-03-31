@@ -1,0 +1,45 @@
+  :root {
+    --green-deep: #2d5a27;
+    --green-mid: #4a8c3f;
+    --green-light: #7db96e;
+    --green-pale: #e8f3e5;
+    --amber: #c8843a;
+    --cream: #f7f3ee;
+    --text: #2a2a2a;
+    --text-muted: #6b6b6b;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100dvh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* ── TAGLINE CARD ── */
+  .tagline-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  }
+
+  .tagline-card p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+
+  .current-plants {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  }
