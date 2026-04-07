@@ -6,6 +6,7 @@
   <title>Add Plant</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="addplant.css">
+<script type="module" src="addPlant.js"></script>
 
 </head>
 <body>
@@ -13,47 +14,47 @@
 
     <!-- Scrollable form content -->
     <div class="content">
+      <form>
+        <!-- Plant name -->
+        <div class="field">
+          <label>Plant name</label>
+          <input type="text" id="plant-name" placeholder="Name of plant" />
+        </div>
 
-      <!-- Plant name -->
-      <div class="field">
-        <label>Plant name</label>
-        <input type="text" placeholder="Name of plant" />
-      </div>
+        <!-- Latin name -->
+        <div class="field">
+          <label>Plant's Latin name</label>
+          <input type="text" id="plant-type" placeholder="Latin plant name" />
+        </div>
 
-      <!-- Latin name -->
-      <div class="field">
-        <label>Plant's Latin name</label>
-        <input type="text" placeholder="Latin plant name" />
-      </div>
+        <!-- Picture upload -->
+        <div>
+          <span class="upload-label">Picture of Plant</span>
+          <label class="upload-box">
+            <input type="file" id="plant-image" accept="image/*" hidden />
+            <!-- Upload icon -->
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"
+              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            </svg>
+            Upload image
+          </label>
+        </div>
 
-      <!-- Picture upload -->
-      <div>
-        <span class="upload-label">Picture of Plant</span>
-        <label class="upload-box">
-          <input type="file" accept="image/*" hidden />
-          <!-- Upload icon -->
-          <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"
-               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          </svg>
-          Upload image
-        </label>
-      </div>
+        <!-- Pickup location -->
+        <div class="field">
+          <label>Where to pickup plant</label>
+          <input type="text" id="plant-location" placeholder="pickup location ex library" />
+        </div>
 
-      <!-- Pickup location -->
-      <div class="field">
-        <label>Where to pickup plant</label>
-        <input type="text" placeholder="pickup location ex library" />
-      </div>
+        <!-- Pickup time -->
+        <div class="field">
+          <label>What available time to pickup plant</label>
+          <input type="text" id="plant-time" placeholder="morning (7am - 12pm)" />
+        </div>
 
-      <!-- Pickup time -->
-      <div class="field">
-        <label>What available time to pickup plant</label>
-        <input type="text" placeholder="morning (7am - 12pm)" />
-      </div>
-
-      <!-- Add button -->
-      <button class="btn-add">Add Plant</button>
-
+        <!-- Add button -->
+        <button class="btn-add" id="addPlant-button">Add Plant</button>
+      </form>
     </div>
 
       <!-- Nav bar -->
