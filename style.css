@@ -48,9 +48,15 @@ body {
   box-shadow: 0 2px 12px rgba(0, 0, 0, .06);
 }
 
-/* .topbar {
-  width: 100%;
-} */
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.topbar input {
+  flex: 1;
+}
 
 .bottom-nav {
   position: fixed;
