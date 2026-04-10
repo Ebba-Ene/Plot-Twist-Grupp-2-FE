@@ -45,6 +45,8 @@ async function Getplants(map) {
 
     const markers = new L.MarkerClusterGroup();
 
+    const markerMap= {};
+
     // This is your "Engine"
     plants.forEach(plant => {
 
@@ -65,13 +67,14 @@ async function Getplants(map) {
             }
         });
         markers.addLayer(marker);
+        markerMap[plant._id] = marker;
 
         
 
         allCardsHtml = `
         <div class="plant-card" data-id="${plant._id}">
-            <img src="${plant.image}" alt="${plant.name}" height="100">
-            <h3>${plant.name}</h3>
+            <img src="${plant.image}" alt="${plant.name}" height="91px">
+            <h4>${plant.name}</h4>
             <p>Light level: ${plant.lightLevels}</p>
         </div>
         `;
@@ -80,8 +83,33 @@ async function Getplants(map) {
         cardContainer.innerHTML += allCardsHtml;
     });
 
-        map.addLayer(markers)
-        return plants;
+    const allCards = document.querySelectorAll(".plant-card");
+    const mapElement = document.getElementById('map');
+
+    allCards.forEach(card=>{
+        card.addEventListener('click',()=>{
+
+            const plantId = card.getAttribute("data-id");
+            const targetMarker = markerMap[plantId];
+
+            if(targetMarker){
+                mapElement.scrollIntoView({behavior: 'smooth', block:'center'});
+
+                map.flyTo(targetMarker.getLatLng(),16,{duration:4});
+
+                map.once('moveend', ()=>{
+                    markers.zoomToShowLayer(targetMarker,() =>{
+                        targetMarker.openPopup();
+                    });
+                })
+
+            }
+        });
+    });
+
+    map.addLayer(markers)
+    return plants;
+
 }
 
 Getplants(map);
