@@ -1,6 +1,6 @@
 import { getBaseUrl } from "./src/utils/api.js";
 
-const form = document.querySelector("#addPlant-button");
+const form = document.querySelector("#add-plant-form");
 const plantName = document.querySelector("#plant-name");
 const plantType = document.querySelector("#plant-type");
 const plantImage = document.querySelector("#plant-image");
@@ -74,7 +74,6 @@ function GetMeetups(map){
     map.addLayer(markers)
 }
 
-GetMeetups(map);
 
 
 const cityDropdown = document.querySelector("#lib-city");
@@ -84,14 +83,14 @@ const libDropdown = document.querySelector("#lib");
 cityDropdown.addEventListener("change", (e)=>{
     const selectedCity = e.target.value;
     libDropdown.innerHTML = '<option value="" disabled selected>Library</option>';
-
+    
     // Makes map focus on the city area (its targeting the first pin coordinates and showing a zoomed out view)
     const filtered = mockLibraries.filter(l => l.city === selectedCity);
     if(filtered.length >0){
         const cityFocus = filtered[0].coordinates;
         map.flyTo(cityFocus, 12);
     }
-
+    
     // Gives the library a dropdown that is dependant on which objects have the same city, then makes an list of options with their library names
     filtered.forEach(l => {
         const opt = document.createElement("option");
@@ -107,14 +106,10 @@ libDropdown.addEventListener('change', (e) => {
     map.flyTo(coords, 15)
 });
 
-function updateManualLocation(latlng){
-    
-}
-
 
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
+    
     const newPlant = {
         name: plantName.value.trim(),
         image: plantImage.value.trim(),
@@ -125,29 +120,30 @@ form.addEventListener("submit", async (e) => {
         meetingTime: plantTime.value,
     };
     console.log("Submitting new plant:", newPlant);
-
+    
     try {
-    const response = await fetch(getBaseUrl() + "plants", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newPlant),
-    });
-
-    console.log("Status:", response.status);
-
-    const text = await response.text();
-    console.log("Response from backend:", text);
-
-    if (!response.ok) {
-        throw new Error(`Request failed with status ${response.status}`);
-    }
-
-    alert("Plant added successfully!");
-    form.reset();
+        const response = await fetch(getBaseUrl() + "plants", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newPlant),
+        });
+        
+        console.log("Status:", response.status);
+        
+        const text = await response.text();
+        console.log("Response from backend:", text);
+        
+        if (!response.ok) {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+        
+        alert("Plant added successfully!");
+        form.reset();
     } catch (error) {
         console.error("Error adding plant:", error);
         alert("An error occurred. Please try again.");
     }
 });
+GetMeetups(map);
