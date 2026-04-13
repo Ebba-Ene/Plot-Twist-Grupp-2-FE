@@ -29,7 +29,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // Creates the search function
-L.Control.geocoder().addTo(map);
+// L.Control.geocoder().addTo(map);
 
 const mockLibraries = [
     {
@@ -106,6 +106,25 @@ libDropdown.addEventListener('change', (e) => {
     map.flyTo(coords, 15)
 });
 
+function manualLocation(latlng){
+    const coords = [latlng.lat, latlng.lng];
+    selectCoordinates = coords;
+    cityDropdown.value = "";
+    libDropdown.value = "";
+
+    if(currentManualMarker){
+        currentManualMarker.setLatLng(latlng);
+        L.marker(latlng, {icon: pinIcon});
+    } else {
+        currentManualMarker = L.marker(latlng, {icon: pinIcon, draggable: true});
+    }
+    console.log("User pinned at:", coords);
+}
+
+// map.on('click', (e)=> manualLocation(e.latlng));
+
+// const geocoder = L.Control.geocoder().addTo(map);
+// geocoder.on('markgeocode', (e)=> manualLocation(e.geocode.center));
 
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -116,7 +135,7 @@ form.addEventListener("submit", async (e) => {
         species: plantType.value.trim(),
         lightLevels: brightnessLevel.value,
         ownerId: "65f1a2b3c4d5e6f7a8b9c001",
-        coordinates: selectCoordinates, // Placeholder coordinates
+        coordinates: selectCoordinates, 
         meetingTime: plantTime.value,
     };
     console.log("Submitting new plant:", newPlant);
