@@ -1,5 +1,7 @@
 import { getBaseUrl } from "./src/utils/api.js";
 
+// log in // 
+
 let emailInput = document.querySelector("#email");
 let passwordInput = document.querySelector("#password");
 let loginBtn = document.querySelector("#login");
@@ -28,6 +30,7 @@ loginBtn.addEventListener("click", async () => {
     if (response.ok) {
       console.log("Inloggning lyckades!", data);
       localStorage.setItem("token", data.token);
+      window.location.href = "./index.html";
     } else {
       console.error("Fel:", data.message);
       alert(data.message || "Något gick fel.");
@@ -37,11 +40,18 @@ loginBtn.addEventListener("click", async () => {
     console.error("Nätverksfel:", error);
     alert("Kunde inte nå servern.");
   }
+
+  // log out //
+    const logoutBtn = document.querySelector("#logout");
+    logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem(token);
+        console.log("Utloggning lyckades!", data);
+    });
+
 });
 
 
-// ----------------- karta ----------------------------
-
+// ----------------- map ----------------------------
 
 let pinIcon = L.icon({
     iconUrl: './images/pin-logo.png',
@@ -83,10 +93,7 @@ map.on('click', (e)=> manualLocation(e.latlng));
 const geocoder = L.Control.geocoder({ defaultMarkGeocode: false}).addTo(map);
 geocoder.on('markgeocode', (e)=> manualLocation(e.geocode.center));
 
-
-// ----------------- karta ----------------------------
-
-
+// register new user //
 
 let registerName = document.querySelector("#registerUsername");
 let registerEmail = document.querySelector("#registerUserEmail");
@@ -99,7 +106,6 @@ signupBtn.addEventListener("click", async () => {
   const password = registerPassword.value;
   const location = selectCoordinates
 
-  // Enkel validering
   if (!email || !password) {
     alert("Fyll i både e-post och lösenord.");
     return;
@@ -120,6 +126,8 @@ signupBtn.addEventListener("click", async () => {
     if (response.ok) {
         console.log("Registrering lyckades!", data);
         localStorage.setItem("token", data.token);
+        window.location.href = "./index.html";
+    
     } else {
         console.error("Fel:", data.message);
         alert(data.message || "Något gick fel.");
