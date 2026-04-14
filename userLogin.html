@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +14,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+    <script type="module" src="userLogin.js"></script>
 </head>
 
 <body>
@@ -28,15 +30,15 @@
 
             <div class="field">
                 <label>Email</label>
-                <input type="email" placeholder="Enter your email" />
+                <input type="email" id="email" placeholder="Enter your email" />
             </div>
 
             <div class="field">
                 <label>Password</label>
-                <input type="password" placeholder="Enter your password" />
+                <input type="password" id="password" placeholder="Enter your password" />
             </div>
 
-            <button class="btn-login">Log In</button>
+            <button type="button" class="btn-login" id="login">Log In</button>
 
             <p class="extra">Forgot password?</p>
 
@@ -55,17 +57,19 @@
 
             <div class="field">
                 <label>Email</label>
-                <input type="email" placeholder="Enter your email" />
+                <input type="email" id="registerUserEmail" placeholder="Enter your email" />
             </div>
 
             <div class="field">
                 <label>Password</label>
-                <input type="password" placeholder="Create a password" />
+                <input type="password" id="registerUserPassword" placeholder="Create a password" />
             </div>
 
-            <button class="btn-signup">Create Account</button>
-
+            <button class="btn-signup" type="button" id="signupBtn">Create Account</button>
         </div>
+
+
+        <form>
 
 <!-- Nav bar -->
 <nav class="bottom-nav">
