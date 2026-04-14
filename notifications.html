@@ -3,6 +3,7 @@
   <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <script type="module" src="./src/scripts/notifications.js"></script>
       <title>Plot Twist - Notifications</title>
 
       <!-- Fonts -->
@@ -14,11 +15,14 @@
       <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <h1 class="title">My Notifications</h1>
-    <p class="subtitle">Swap or no swap</p>
-
     <div class="form-page">
       <div class="content">
+        <h1 class="title">My Notifications</h1>
+        <p class="subtitle">Swap or no swap</p>
+
+        <div id="notification-list" class="notification-list">
+        </div>
+
       <!-- Nav bar -->
         <nav class="bottom-nav">
         
@@ -63,7 +67,7 @@
               <span class="tooltip">Admin</span>
             </a>
           </div>
-          
+
         </nav>
       </div>
     </div>
