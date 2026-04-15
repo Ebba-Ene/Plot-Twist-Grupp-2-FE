@@ -24,7 +24,7 @@ export async function sendTradeRequest(plant, currentUser) {
 
   const requestBody = {
     plantId: plant._id,
-    requesterId: "65f1a2b3c4d5e6f7a8b9c002"
+    requesterId: "65f1a2b3c4d5e6f7a8b9c002" // Kim Nguyen
   };
 
   try {
@@ -65,11 +65,9 @@ async function updateTradeStatus(tradeId, newStatus) {
   try {
     const response = await fetch(url, {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        status: newStatus
+      status: newStatus
       })
     });
 
@@ -133,7 +131,7 @@ async function checkForTradeRequests() {
     const response = await fetch(url);
     const trades = await response.json();
 
-    const currentUserId = "65f1a2b3c4d5e6f7a8b9c001";
+    const currentUserId = "65f1a2b3c4d5e6f7a8b9c001"; // Amara Okafor
 
     const incomingRequests = trades.filter(trade =>
       trade.ownerId._id === currentUserId &&
@@ -148,7 +146,6 @@ async function checkForTradeRequests() {
     console.error("Error fetching trades:", error);
   }
 }
-
 
 // UPDATE ON PAGE LOAD
 document.addEventListener("DOMContentLoaded", () => {

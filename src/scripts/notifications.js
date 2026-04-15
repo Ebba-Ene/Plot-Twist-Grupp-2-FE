@@ -18,8 +18,8 @@ async function loadNotifications() {
         }
         const trades = await response.json();
         const myTrades = trades.filter(trade =>
-        trade.ownerId?._id === currentUserId ||
-        trade.requesterId?._id === currentUserId
+        trade.ownerId?._id === currentUserId ||     // const currentUserId = "65f1a2b3c4d5e6f7a8b9c001" 
+        trade.requesterId?._id === currentUserId    // Amara Okafor är just nu den hårdkodade inloggade användaren
         );
     
         renderNotifications(myTrades);
