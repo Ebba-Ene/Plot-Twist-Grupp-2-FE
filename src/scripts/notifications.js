@@ -89,14 +89,14 @@ function createTradeCard(trade) {
 
     if (acceptBtn) {
         acceptBtn.addEventListener("click", async () => {
-            await updateTradeStatus(trade._id, "accepted");
+            await updateTradeStatus(trade._id, "approved");
             loadNotifications();
         });
     }
 
     if (rejectBtn) {
         rejectBtn.addEventListener("click", async () => {
-            await updateTradeStatus(trade._id, "rejected");
+            await updateTradeStatus(trade._id, "cancelled");
             loadNotifications();
         });
     }
