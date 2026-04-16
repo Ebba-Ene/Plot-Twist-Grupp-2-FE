@@ -1,6 +1,6 @@
 import { getBaseUrl } from "./src/utils/api.js";
 import { smartFetch } from "./src/utils/api.js";
-// import { openPlantModal } from "./src/scripts/startpage.js";
+//import { openPlantModal } from "./src/scripts/startpage.js";
 
 // const currentUser = {
 //     _id: "demo-user-123",

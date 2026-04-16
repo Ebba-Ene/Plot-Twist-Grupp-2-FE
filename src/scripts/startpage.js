@@ -1,9 +1,16 @@
 import { getBaseUrl } from "../utils/api.js";
 let selectedTrade = null;
 
+const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+if (!userInfo) {
+    window.location.href = "./userLogin.html";
+}
+
+const currentUserId = userInfo._id;
 
 // OPEN PLANT MODAL — MORE INFO (from index.html)
-export function openPlantModal(plant, currentUser) {
+export function openPlantModal(plant, currentUserId) {
   document.querySelector("#modal-image").src = plant.image;
   document.querySelector("#modal-name").textContent = plant.name;
   document.querySelector("#modal-water").textContent = "Light Level: " + plant.lightLevels;
@@ -13,18 +20,18 @@ export function openPlantModal(plant, currentUser) {
   document.querySelector("#plant-modal").classList.remove("hidden");
 
   document.querySelector("#trade-btn").onclick = () => {
-    sendTradeRequest(plant, currentUser);
+    sendTradeRequest(plant, currentUserId);
   };
 }
 
 
 // SEND TRADE REQUEST 
-export async function sendTradeRequest(plant, currentUser) {
+export async function sendTradeRequest(plant, currentUserId) {
   const url = `${getBaseUrl()}trades`;
 
   const requestBody = {
     plantId: plant._id,
-    requesterId: "65f1a2b3c4d5e6f7a8b9c002" // Kim Nguyen
+    requesterId: currentUserId
   };
 
   try {
@@ -130,8 +137,6 @@ async function checkForTradeRequests() {
   try {
     const response = await fetch(url);
     const trades = await response.json();
-
-    const currentUserId = "65f1a2b3c4d5e6f7a8b9c001"; // Amara Okafor
 
     const incomingRequests = trades.filter(trade =>
       trade.ownerId._id === currentUserId &&

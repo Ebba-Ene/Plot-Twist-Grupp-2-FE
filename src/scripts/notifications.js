@@ -3,7 +3,7 @@ import { getBaseUrl } from "../utils/api.js";
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 if (!userInfo) {
-    window.location.href = "./login.html";
+    window.location.href = "./userLogin.html";
 }
 
 const currentUserId = userInfo._id;
