@@ -92,7 +92,7 @@ function createTradeCard(trade) {
                     <p>Status: <span class="status">${trade.status}</span></p>
                     <p>Meeting time: ${
                         trade.plantId?.meetingTime
-                            ? new Date(trade.plantId.meetingTime).toLocaleDateString()
+                            ? new Date(trade.plantId.meetingTime).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
                             : "Not set"
                     }</p>
                 </div>

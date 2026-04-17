@@ -4,7 +4,7 @@ const form = document.querySelector("#add-plant-form");
 const plantName = document.querySelector("#plant-name");
 const plantType = document.querySelector("#plant-type");
 const plantImage = document.querySelector("#plant-image");
-const plantTime = document.querySelector("#plant-time");
+const plantTime = document.querySelector('input[type="datetime-local"]');
 const brightnessLevel = document.querySelector("#brightnessLevel");
 
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
