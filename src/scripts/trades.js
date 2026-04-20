@@ -7,7 +7,16 @@ export async function sendTradeRequest(plant) {
     const currentUserId = getCurrentUserId();
 
     if (!currentUserId) {
-        alert("You have to be logged in to send a trade request.");
+        Toastify({
+            text: "Join the community to see details and trade plants",
+            duration: 2000,
+            gravity: "top",
+            position: "right",
+            style : {
+                background: "linear-gradient(to right, #4CAF50, #81C784)",
+                color: "#fff",
+            }
+        }).showToast();
         return;
     }
 
@@ -32,9 +41,25 @@ export async function sendTradeRequest(plant) {
             throw new Error(data?.message || "Could not send trade request");
         }
 
-        alert("Trade request sent successfully!");
+        Toastify({
+            text: "Trade request sent successfully!",
+            duration: 2000,
+            gravity: "top",
+            position: "right",
+            style : {
+                background: "linear-gradient(to right, #4CAF50, #81C784)",
+                color: "#fff",
+            }
+        }).showToast();
+
     } catch (error) {
-        alert("Something went wrong while sending the trade request: " + error.message);
+        Toastify({
+            text: "Oops! Something went wrong..." + (error.message ? ` (${error.message})` : ""),
+            duration: 4000,
+            style: {
+                background: "#d32f2f"
+            }
+        }).showToast();
     }
 }
 
@@ -58,7 +83,13 @@ async function updateTradeStatus(tradeId, newStatus) {
         return data;
     } catch (error) {
         console.error("Error updating trade:", error);
-        alert("Could not update trade: " + error.message);
+        Toastify({
+            text: "Oops! Something went wrong..." + (error.message ? ` (${error.message})` : ""),
+            duration: 4000,
+            style: {
+                background: "#d32f2f"
+            }
+        }).showToast();
     }
 }
 
@@ -113,7 +144,17 @@ export function initTradeModals() {
             if (!selectedTrade) return;
             
             await updateTradeStatus(selectedTrade._id, "approved");
-            alert("Trade accepted!");
+            Toastify({
+                text: "Trade approved!",
+                duration: 2000,
+                gravity: "top",
+                position: "right",
+                style : {
+                    background: "linear-gradient(to right, #4CAF50, #81C784)",
+                    color: "#fff",
+                }
+            }).showToast();
+
             notificationModal?.classList.add("hidden");
         };
     }
@@ -123,7 +164,13 @@ export function initTradeModals() {
             if (!selectedTrade) return;
             
             await updateTradeStatus(selectedTrade._id, "cancelled");
-            alert("Trade cancelled!");
+            Toastify({
+            text: "Trade cancelled",
+            duration: 4000,
+            style: {
+                background: "#d32f2f"
+            }
+        }).showToast();
             notificationModal?.classList.add("hidden");
         };
     }

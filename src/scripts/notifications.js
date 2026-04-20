@@ -92,7 +92,12 @@ function createTradeCard(trade) {
                     <p>Status: <span class="status">${trade.status}</span></p>
                     <p>Meeting time: ${
                         trade.plantId?.meetingTime
-                            ? new Date(trade.plantId.meetingTime).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+                            ? new Date(trade.plantId.meetingTime).toLocaleString([], {
+                                year: 'numeric', 
+                                month: 'numeric', 
+                                day: 'numeric', 
+                                hour: '2-digit', 
+                                minute: '2-digit'})
                             : "Not set"
                     }</p>
                 </div>
@@ -150,6 +155,12 @@ async function updateTradeStatus(tradeId, newStatus) {
         return data;
     } catch (error) {
         console.error("Error updating trade:", error);
-        alert("Could not update trade: " + error.message);
+        Toastify({
+            text: "Oops! Something went wrong..." + error.message,
+            duration: 4000,
+            style: {
+                background: "#d32f2f"
+            }
+        }).showToast();
     }
 }

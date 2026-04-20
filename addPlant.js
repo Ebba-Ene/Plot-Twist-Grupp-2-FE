@@ -159,11 +159,27 @@ form.addEventListener("submit", async (e) => {
             throw new Error(`Request failed with status ${response.status}`);
         }
         
-        alert("Plant added successfully!");
+        Toastify({
+            text: "Plant added successfully!",
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            style : {
+                background: "linear-gradient(to right, #4CAF50, #81C784)",
+                color: "#fff",
+            }
+        }).showToast();
+        
         form.reset();
     } catch (error) {
         console.error("Error adding plant:", error);
-        alert("An error occurred. Please try again.");
+        Toastify({
+            text: "Oops! Something went wrong...",
+            duration: 4000,
+            style: {
+                background: "#d32f2f"
+            }
+        }).showToast();
     }
 });
 

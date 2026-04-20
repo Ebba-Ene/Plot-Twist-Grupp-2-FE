@@ -3,7 +3,14 @@ import { isLoggedIn, getCurrentUserId } from "../utils/auth.js";
 
 export function openPlantModal(plant) {
     if (!isLoggedIn()) {
-        alert("You have to be logged in to see this feature!");
+        Toastify({
+            text: "Join the community to see details and trade plants",
+            duration: 4000,
+            style: {
+                background: "linear-gradient(to right, #4CAF50, #81C784)",
+                color: "#fff",
+            }
+        }).showToast();
         return;
     }
 
@@ -73,7 +80,14 @@ async function sendTradeRequest(plant) {
     const currentUserId = getCurrentUserId();
 
     if (!currentUserId) {
-        alert("You have to be logged in to send a trade request!");
+        Toastify({
+            text: "Join the community to see details and trade plants",
+            duration: 4000,
+            style: {
+                background: "linear-gradient(to right, #4CAF50, #81C784)",
+                color: "#fff",
+            }
+        }).showToast();
         return;
     }
 
@@ -102,11 +116,26 @@ async function sendTradeRequest(plant) {
         if (!response.ok) {
             throw new Error(data?.message || "Could not send trade request");
         }
-    
-        alert("Trade request sent successfully!");
+
+        Toastify({
+            text: "Trade request sent successfully!",
+            duration: 4000,
+            gravity: "top",
+            position: "right",
+            style: {
+                background: "linear-gradient(to right, #4CAF50, #81C784)",
+                color: "#fff",
+            }
+        }).showToast();
         closePlantModal();
     } catch (error) {
         console.error("Error sending trade request:", error);
-        alert("Something went wrong while sending the trade request: " + error.message);
+        Toastify({
+            text: "Oops! Something went wrong..." + (error.message ? ` (${error.message})` : ""),
+            duration: 4000,
+            style: {
+                background: "#d32f2f"
+            }
+        }).showToast();
     }
 }

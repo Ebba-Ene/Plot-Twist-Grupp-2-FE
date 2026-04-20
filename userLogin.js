@@ -13,7 +13,13 @@ loginBtn.addEventListener("click", async () => {
   const password = passwordInput.value;
 
   if (!email || !password) {
-    alert("Fyll i både e-post och lösenord.");
+    Toastify({
+      text: "Please fill in both email and password.",
+      duration: 4000,
+      style: {
+        background: "#d32f2f"
+      }
+    }).showToast();;
     return;
   }
 
@@ -40,12 +46,24 @@ loginBtn.addEventListener("click", async () => {
       window.location.href = "./startpage.html";
     } else {
       console.error("Fel:", data.message);
-      alert(data.message || "Något gick fel.");
+      Toastify({
+        text: "Something went wrong with your login. Please check your credentials and try again.",
+        duration: 4000,
+        style: {
+          background: "#d32f2f"
+        }
+      }).showToast();
     }
 
   } catch (error) {
     console.error("Nätverksfel:", error);
-    alert("Kunde inte nå servern.");
+    Toastify({
+      text: "Something went wrong with the network. Please try again later.",
+      duration: 4000,
+      style: {
+        background: "#d32f2f"
+      }
+    }).showToast();
   }
 
 });
@@ -107,7 +125,13 @@ signupBtn.addEventListener("click", async () => {
   const location = selectCoordinates
 
   if (!email || !password) {
-    alert("Fyll i både e-post och lösenord.");
+    Toastify({
+      text: "Please fill in both email and password.",
+      duration: 4000,
+      style: {
+        background: "#d32f2f"
+      }
+    }).showToast();
     return;
   }
 
@@ -132,11 +156,23 @@ signupBtn.addEventListener("click", async () => {
     
     } else {
         console.error("Fel:", data.message);
-        alert(data.message || "Något gick fel.");
+        Toastify({
+          text: "Something went wrong with your registration. Please check your details and try again.",
+          duration: 4000,
+          style: {
+            background: "#d32f2f"
+          }
+        }).showToast();
     }
 
     } catch (error) {
     console.error("Nätverksfel:", error);
-    alert("Kunde inte nå servern.");
+    Toastify({
+      text: "Something went wrong with the network. Please try again later.",
+      duration: 4000,
+      style: {
+        background: "#d32f2f"
+      }
+    }).showToast();
     }
 })
