@@ -82,7 +82,7 @@ function createTradeCard(trade) {
     if (trade.status !== "completed") {
         actionButtons = `
             <div class="notification-actions">
-                <button class="reject-btn">Reject</button>
+                <button class="reject-btn">Cancel</button>
             </div>
         `;
     } 
@@ -98,7 +98,7 @@ function createTradeCard(trade) {
         actionButtons = `
             <div class="notification-actions">
                 <button class="complete-btn">Complete</button>
-                <button class="reject-btn">Reject</button>
+                <button class="reject-btn">Cancel</button>
             </div>
         `;        
     }
