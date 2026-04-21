@@ -1,5 +1,4 @@
-import { getRegionFromCoords } from "./src/utils/api.js";
-import { getBaseUrl } from "./src/utils/api.js";
+import { getRegionFromCoords, smartFetch } from "./src/utils/api.js";
 
 function renderPlantCards(plants){
     const container = document.querySelector("#plant-grid");
@@ -35,9 +34,7 @@ async function loadProfile() {
         regionElement.textContent = regionName;
     }
 
-    const url = `${getBaseUrl()}users/id/${user._id}`;
-    const response = await fetch(url)
-
+    const response = await smartFetch("auth/me");
     const userProfile = await response.json();
 
     // Calculate stats from the fetched userProfile
