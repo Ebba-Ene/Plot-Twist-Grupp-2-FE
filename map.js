@@ -95,7 +95,16 @@ async function Getplants(map) {
                     if(isLoggedIn){
                         openPlantModal(plant);
                     } else{
-                        alert("You have to be logged in to see this feature!")
+                        Toastify({
+                            text: "Join the community to see details and trade plants",
+                            duration: 2000,
+                            gravity: "top",
+                            position: "right",
+                            style : {
+                                background: "linear-gradient(to right, #4CAF50, #81C784)",
+                                color: "#fff",
+                            }
+                        }).showToast();
                     }
                 };
             }
@@ -109,6 +118,8 @@ async function Getplants(map) {
         <div class="plant-card" data-id="${plant._id}">
             <img src="${plant.image}" alt="${plant.name}" height="91px">
             <h4>${plant.name}</h4>
+            <p><i>${plant.species}</i></p>
+            <p>Light level: ${plant.lightLevels}</p>
         </div>
         `;
 
@@ -128,7 +139,7 @@ async function Getplants(map) {
             if(targetMarker){
                 mapElement.scrollIntoView({behavior: 'smooth', block:'center'});
 
-                map.flyTo(targetMarker.getLatLng(),16,{duration:4});
+                map.flyTo(targetMarker.getLatLng(),16,{duration:1});
 
                 map.once('moveend', ()=>{
                     markers.zoomToShowLayer(targetMarker,() =>{

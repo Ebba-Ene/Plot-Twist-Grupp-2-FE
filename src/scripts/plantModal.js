@@ -3,7 +3,14 @@ import { isLoggedIn, getCurrentUserId } from "../utils/auth.js";
 
 export function openPlantModal(plant) {
     if (!isLoggedIn()) {
-        alert("You have to be logged in to see this feature!");
+        Toastify({
+            text: "Join the community to see details and trade plants",
+            duration: 4000,
+            style: {
+                background: "linear-gradient(to right, #4CAF50, #81C784)",
+                color: "#fff",
+            }
+        }).showToast();
         return;
     }
 
@@ -11,6 +18,7 @@ export function openPlantModal(plant) {
     const image = document.querySelector("#modal-image");
     const name = document.querySelector("#modal-name");
     const owner = document.querySelector("#modal-owner");
+    const meetingTime = document.querySelector("#modal-time");
     const tradeBtn = document.querySelector("#trade-btn");
 
     if (!modal || !image || !name || !owner || !tradeBtn) return;
@@ -19,6 +27,20 @@ export function openPlantModal(plant) {
     image.alt = plant.name || "Plant image";
     name.textContent = plant.name || "Unknown plant";
     owner.textContent = "Owner: " + (plant.ownerId?.name || "Unknown");
+    
+    if (plant.meetingTime) {
+        const formattedMeetingTime = new Date(plant.meetingTime).toLocaleString("sv-SE", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+
+        meetingTime.textContent = "Available for pickup: " + formattedMeetingTime;
+    } else {
+        meetingTime.textContent = "Available for pickup: Unknown";
+    }
 
     tradeBtn.onclick = async () => {
         await sendTradeRequest(plant);
@@ -58,7 +80,14 @@ async function sendTradeRequest(plant) {
     const currentUserId = getCurrentUserId();
 
     if (!currentUserId) {
-        alert("You have to be logged in to send a trade request!");
+        Toastify({
+            text: "Join the community to see details and trade plants",
+            duration: 4000,
+            style: {
+                background: "linear-gradient(to right, #4CAF50, #81C784)",
+                color: "#fff",
+            }
+        }).showToast();
         return;
     }
 
@@ -87,11 +116,26 @@ async function sendTradeRequest(plant) {
         if (!response.ok) {
             throw new Error(data?.message || "Could not send trade request");
         }
-    
-        alert("Trade request sent successfully!");
+
+        Toastify({
+            text: "Trade request sent successfully!",
+            duration: 4000,
+            gravity: "top",
+            position: "right",
+            style: {
+                background: "linear-gradient(to right, #4CAF50, #81C784)",
+                color: "#fff",
+            }
+        }).showToast();
         closePlantModal();
     } catch (error) {
         console.error("Error sending trade request:", error);
-        alert("Something went wrong while sending the trade request: " + error.message);
+        Toastify({
+            text: "Oops! Something went wrong..." + (error.message ? ` (${error.message})` : ""),
+            duration: 4000,
+            style: {
+                background: "#d32f2f"
+            }
+        }).showToast();
     }
 }

@@ -61,7 +61,16 @@ function createTradeCard(trade) {
     const isOwner = ownerId === currentUserId;
 
     const cardTypeClass = isOwner ? "incoming" : "outgoing";
-    const tradeTypeText = isOwner ? "Incoming request!" : "awaiting response...";
+
+        // NEW: status class
+        let statusClass = "";
+
+        if (trade.status === "approved") {
+            statusClass = "status-approved";
+        } else if (trade.status === "completed") {
+            statusClass = "status-completed";
+        }
+    const tradeTypeText = isOwner ? "Incoming request!" : "My request";
     const personLabel = isOwner ? "Requested by" : "Owner";
 
     const otherUserName = isOwner
@@ -70,17 +79,32 @@ function createTradeCard(trade) {
 
     let actionButtons = "";
 
-    if (isOwner && trade.status === "pending") {
+    if (trade.status !== "completed") {
         actionButtons = `
             <div class="notification-actions">
-                <button class="accept-btn">Accept</button>
                 <button class="reject-btn">Reject</button>
             </div>
         `;
+    } 
+    
+    if(isOwner && trade.status === "pending"){
+        actionButtons = `
+        <div class="notification-actions">
+            <button class="accept-btn">Accept</button>
+            <button class="reject-btn">Reject</button>
+        </div>
+        `;  
+    } else if(isOwner && trade.status === "approved"){
+        actionButtons = `
+            <div class="notification-actions">
+                <button class="complete-btn">Complete</button>
+                <button class="reject-btn">Reject</button>
+            </div>
+        `;        
     }
 
     card.innerHTML = `
-        <div class="notification-big-card ${cardTypeClass}">
+        <div class="notification-big-card ${cardTypeClass} ${statusClass}">
             <p class="trade-type">${tradeTypeText}</p>
 
             <div class="notification-img-text">
@@ -92,7 +116,12 @@ function createTradeCard(trade) {
                     <p>Status: <span class="status">${trade.status}</span></p>
                     <p>Meeting time: ${
                         trade.plantId?.meetingTime
-                            ? new Date(trade.plantId.meetingTime).toLocaleDateString()
+                            ? new Date(trade.plantId.meetingTime).toLocaleString([], {
+                                year: 'numeric', 
+                                month: 'numeric', 
+                                day: 'numeric', 
+                                hour: '2-digit', 
+                                minute: '2-digit'})
                             : "Not set"
                     }</p>
                 </div>
@@ -103,6 +132,7 @@ function createTradeCard(trade) {
     `;
 
     const acceptBtn = card.querySelector(".accept-btn");
+    const completeBtn = card.querySelector(".complete-btn");
     const rejectBtn = card.querySelector(".reject-btn");
 
     if (acceptBtn) {
@@ -115,6 +145,13 @@ function createTradeCard(trade) {
     if (rejectBtn) {
         rejectBtn.addEventListener("click", async () => {
             await updateTradeStatus(trade._id, "cancelled");
+            loadNotifications();
+        });
+    }
+
+    if (completeBtn) {
+        completeBtn.addEventListener("click", async () => {
+            await updateTradeStatus(trade._id, "completed");
             loadNotifications();
         });
     }
@@ -150,6 +187,12 @@ async function updateTradeStatus(tradeId, newStatus) {
         return data;
     } catch (error) {
         console.error("Error updating trade:", error);
-        alert("Could not update trade: " + error.message);
+        Toastify({
+            text: "Oops! Something went wrong..." + error.message,
+            duration: 4000,
+            style: {
+                background: "#d32f2f"
+            }
+        }).showToast();
     }
 }
