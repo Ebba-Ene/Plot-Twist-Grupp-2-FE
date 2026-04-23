@@ -1,11 +1,13 @@
-import { getBaseUrl } from "../utils/api.js";
+import { getBaseUrl, smartFetch } from "../utils/api.js";
 import { isLoggedIn, getCurrentUserId } from "../utils/auth.js";
 
 export function openPlantModal(plant) {
     if (!isLoggedIn()) {
         Toastify({
             text: "Join the community to see details and trade plants",
-            duration: 4000,
+            duration: 3000,
+            gravity: "top",
+            position: "center",
             style: {
                 background: "linear-gradient(to right, #4CAF50, #81C784)",
                 color: "#fff",
@@ -82,7 +84,9 @@ async function sendTradeRequest(plant) {
     if (!currentUserId) {
         Toastify({
             text: "Join the community to see details and trade plants",
-            duration: 4000,
+            duration: 3000,
+            gravity: "top",
+            position: "center",
             style: {
                 background: "linear-gradient(to right, #4CAF50, #81C784)",
                 color: "#fff",
@@ -91,17 +95,14 @@ async function sendTradeRequest(plant) {
         return;
     }
 
-    const url = `${getBaseUrl()}trades`;
-
     const requestBody = {
         plantId: plant._id,
         requesterId: currentUserId
     };
 
     try {
-        const response = await fetch(url, {
+        const response = await smartFetch(`trades`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestBody)
         });
     
@@ -119,9 +120,9 @@ async function sendTradeRequest(plant) {
 
         Toastify({
             text: "Trade request sent successfully!",
-            duration: 4000,
+            duration: 3000,
             gravity: "top",
-            position: "right",
+            position: "center",
             style: {
                 background: "linear-gradient(to right, #4CAF50, #81C784)",
                 color: "#fff",
@@ -132,7 +133,7 @@ async function sendTradeRequest(plant) {
         console.error("Error sending trade request:", error);
         Toastify({
             text: "Oops! Something went wrong..." + (error.message ? ` (${error.message})` : ""),
-            duration: 4000,
+            duration: 3000,
             style: {
                 background: "#d32f2f"
             }

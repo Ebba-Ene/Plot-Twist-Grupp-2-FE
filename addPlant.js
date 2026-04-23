@@ -1,4 +1,4 @@
-import { getBaseUrl } from "./src/utils/api.js";
+import { getBaseUrl, smartFetch } from "./src/utils/api.js";
 
 const form = document.querySelector("#add-plant-form");
 const plantName = document.querySelector("#plant-name");
@@ -144,9 +144,8 @@ form.addEventListener("submit", async (e) => {
     };
     
     try {
-        const response = await fetch(getBaseUrl() + "plants", {
+        const response = await smartFetch("plants", {
             method: "POST",
-            headers: { "Content-Type": "application/json", },
             body: JSON.stringify(newPlant),
         });
         
@@ -163,7 +162,7 @@ form.addEventListener("submit", async (e) => {
             text: "Plant added successfully!",
             duration: 3000,
             gravity: "top",
-            position: "right",
+            position: "center",
             style : {
                 background: "linear-gradient(to right, #4CAF50, #81C784)",
                 color: "#fff",
@@ -175,7 +174,7 @@ form.addEventListener("submit", async (e) => {
         console.error("Error adding plant:", error);
         Toastify({
             text: "Oops! Something went wrong...",
-            duration: 4000,
+            duration: 3000,
             style: {
                 background: "#d32f2f"
             }

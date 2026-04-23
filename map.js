@@ -60,7 +60,13 @@ function filterCardsByMap(map, markerMap){
 
 async function Getplants(map) {
     const url = `${getBaseUrl()}plants`;
-    const response = await fetch(url);
+    
+    const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }); 
 
     // getting the plant data here
     const plants = await response.json();
@@ -85,8 +91,8 @@ async function Getplants(map) {
 
         
         marker.bindPopup(`<b>${plant.name}</b><br>
-            <img src="${plant.image}" alt="${plant.name}" height="100"><br>
-            <button id="more-info-${plant._id}">More info</button>`);
+            <img src="${plant.image}" alt="${plant.name}" width="100%"><br>
+            <button id="more-info-${plant._id}" class="more-info-btn">More info</button>`);
             
         marker.on("popupopen", () => {
             const button = document.getElementById(`more-info-${plant._id}`);
@@ -99,7 +105,7 @@ async function Getplants(map) {
                             text: "Join the community to see details and trade plants",
                             duration: 2000,
                             gravity: "top",
-                            position: "right",
+                            position: "center",
                             style : {
                                 background: "linear-gradient(to right, #4CAF50, #81C784)",
                                 color: "#fff",

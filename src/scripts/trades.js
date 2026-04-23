@@ -1,4 +1,4 @@
-import { getBaseUrl } from "../utils/api.js";
+import { getBaseUrl, smartFetch } from "../utils/api.js";
 import { getCurrentUserId } from "../utils/auth.js";
 
 let selectedTrade = null;
@@ -11,7 +11,7 @@ export async function sendTradeRequest(plant) {
             text: "Join the community to see details and trade plants",
             duration: 2000,
             gravity: "top",
-            position: "right",
+            position: "center",
             style : {
                 background: "linear-gradient(to right, #4CAF50, #81C784)",
                 color: "#fff",
@@ -20,17 +20,14 @@ export async function sendTradeRequest(plant) {
         return;
     }
 
-    const url = `${getBaseUrl()}trades`;
-
     const requestBody = {
         plantId: plant._id,
         requesterId: currentUserId
     };
 
     try {
-        const response = await fetch(url, {
+        const response = await smartFetch(`trades`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestBody)
         });
 
@@ -45,7 +42,7 @@ export async function sendTradeRequest(plant) {
             text: "Trade request sent successfully!",
             duration: 2000,
             gravity: "top",
-            position: "right",
+            position: "center",
             style : {
                 background: "linear-gradient(to right, #4CAF50, #81C784)",
                 color: "#fff",
@@ -55,7 +52,7 @@ export async function sendTradeRequest(plant) {
     } catch (error) {
         Toastify({
             text: "Oops! Something went wrong..." + (error.message ? ` (${error.message})` : ""),
-            duration: 4000,
+            duration: 3000,
             style: {
                 background: "#d32f2f"
             }
@@ -64,12 +61,10 @@ export async function sendTradeRequest(plant) {
 }
 
 async function updateTradeStatus(tradeId, newStatus) {
-    const url = `${getBaseUrl()}trades/${tradeId}`;
 
     try {
-        const response = await fetch(url, {
+        const response = await smartFetch(`trades/${tradeId}`, {
             method: "PATCH",
-            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status: newStatus })
         });
     
@@ -85,7 +80,7 @@ async function updateTradeStatus(tradeId, newStatus) {
         console.error("Error updating trade:", error);
         Toastify({
             text: "Oops! Something went wrong..." + (error.message ? ` (${error.message})` : ""),
-            duration: 4000,
+            duration: 3000,
             style: {
                 background: "#d32f2f"
             }
@@ -107,10 +102,10 @@ export async function checkForTradeRequests() {
     const currentUserId = getCurrentUserId();
     if (!currentUserId) return;
 
-    const url = `${getBaseUrl()}trades`;
-
     try {
-        const response = await fetch(url);
+        const response = await smartFetch(`trades`, {
+            method: "GET",
+        }); 
         const trades = await response.json();
         
         const incomingRequests = trades.filter(trade =>
@@ -149,7 +144,7 @@ export function initTradeModals() {
                 text: "Trade approved!",
                 duration: 2000,
                 gravity: "top",
-                position: "right",
+                position: "center",
                 style : {
                     background: "linear-gradient(to right, #4CAF50, #81C784)",
                     color: "#fff",
@@ -169,7 +164,7 @@ export function initTradeModals() {
                 text: "Trade Completed!",
                 duration: 2000,
                 gravity: "top",
-                position: "right",
+                position: "center",
                 style : {
                     background: "linear-gradient(to right, #4CAF50, #81C784)",
                     color: "#fff",
@@ -187,7 +182,7 @@ export function initTradeModals() {
             await updateTradeStatus(selectedTrade._id, "cancelled");
             Toastify({
             text: "Trade cancelled",
-            duration: 4000,
+            duration: 3000,
             style: {
                 background: "#d32f2f"
             }
