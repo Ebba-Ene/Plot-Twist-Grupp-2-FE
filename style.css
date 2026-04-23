@@ -154,6 +154,25 @@ body {
   text-align: center;
 }
 
+.modal-content p {
+  font-size: 14px;
+  color: #333;
+  margin: 6px 0;
+  text-align: left;
+}
+
+#modal-name {
+  font-size: 18px;
+}
+
+#modal-latin {
+  font-style: italic;
+  color: #555;
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
 .modal-content img {
   width: 100%;
   border-radius: 8px;
