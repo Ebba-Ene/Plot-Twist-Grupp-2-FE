@@ -23,6 +23,7 @@ export function openPlantModal(plant) {
     const modal = document.querySelector("#plant-modal");
     const image = document.querySelector("#modal-image");
     const name = document.querySelector("#modal-name");
+    const latin = document.querySelector("#modal-latin");
     const owner = document.querySelector("#modal-owner");
     const light = document.querySelector("#modal-light");
     const meetingTime = document.querySelector("#modal-time");
@@ -34,6 +35,7 @@ export function openPlantModal(plant) {
     image.src = plant.image || "";
     image.alt = plant.name || "Plant image";
     name.textContent = plant.name || "Unknown plant";
+    latin.textContent = plant.species ? `${plant.species}` : "";
     owner.textContent = "Owner: " + (plant.ownerId?.name || "Unknown");
     light.textContent = "Lightness level: " + (plant.lightLevels || "Unknown");
     meetingPlace.textContent = "Meeting place: " + getLibraryName(plant.coordinates);
