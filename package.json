@@ -1,0 +1,21 @@
+{
+  "name": "be1-grupp-uppgift-fe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "addPlant.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ebba-Ene/Plot-Twist-Grupp-2-FE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Ebba-Ene/Plot-Twist-Grupp-2-FE/issues"
+  },
+  "homepage": "https://github.com/Ebba-Ene/Plot-Twist-Grupp-2-FE#readme"
+}
